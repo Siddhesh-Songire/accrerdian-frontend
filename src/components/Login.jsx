@@ -5,10 +5,37 @@ import {
   Container,
   CssBaseline,
   Grid,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import { Box } from "@mui/material";
+
+const Root = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+  background: "linear-gradient(to right, #4a4a4a, #2b2b2b)",
+});
+
+const Paper = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "5rem",
+  borderRadius: "10px",
+  boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.1)",
+  background: "#fff",
+  height: "70vh",
+  width: "100%",
+});
+
+const Form = styled(Box)({
+  width: "100%", // Fix IE 11 issue.
+  marginTop: 1,
+});
 
 const Login = () => {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -24,50 +51,52 @@ const Login = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Paper elevation={3} style={{ padding: 20, marginTop: 100 }}>
-        <Typography variant="h5" gutterBottom>
-          Login
-        </Typography>
-        <form onSubmit={handleLoginSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Username or Email"
-                name="username"
-                variant="outlined"
-                required
-                onChange={handleLoginChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Password"
-                name="password"
-                type="password"
-                variant="outlined"
-                required
-                onChange={handleLoginChange}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ marginTop: 20 }}
-          >
+    <Root>
+      <Container component="main">
+        <CssBaseline />
+        <Paper elevation={3}>
+          <Typography variant="h5" gutterBottom>
             Login
-          </Button>
-        </form>
-        <Typography variant="body2" style={{ marginTop: 20 }}>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </Typography>
-      </Paper>
-    </Container>
+          </Typography>
+          <Form onSubmit={handleLoginSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Username or Email"
+                  name="username"
+                  variant="outlined"
+                  required
+                  onChange={handleLoginChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Password"
+                  name="password"
+                  type="password"
+                  variant="outlined"
+                  required
+                  onChange={handleLoginChange}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: 20 }}
+            >
+              Login
+            </Button>
+          </Form>
+          <Typography variant="body2" style={{ marginTop: 20, color: "#555" }}>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </Typography>
+        </Paper>
+      </Container>
+    </Root>
   );
 };
 
