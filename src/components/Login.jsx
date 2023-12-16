@@ -16,7 +16,10 @@ const Root = styled(Box)({
   alignItems: "center",
   justifyContent: "center",
   height: "100vh",
-  background: "linear-gradient(to right, #4a4a4a, #2b2b2b)",
+  // background: "linear-gradient(to right, #4a4a4a, #2b2b2b)",
+  background: "rgb(238,174,202)",
+  background:
+    "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)",
 });
 
 const Paper = styled(Box)({
@@ -86,7 +89,7 @@ const Login = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: 20 }}
+              style={{ display: "block", margin: "2rem auto" }}
             >
               Login
             </Button>

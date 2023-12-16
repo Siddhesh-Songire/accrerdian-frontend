@@ -1,8 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import { Box } from "@mui/material";
 
-import image from "../assets/image1.jpg";
+const Root = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+  background: "rgb(238,174,202)",
+  background:
+    "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)",
+});
+
+const Paper = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "5rem",
+  borderRadius: "10px",
+  boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.1)",
+  background: "#fff",
+  height: "70vh",
+  width: "100%",
+});
+
+const Form = styled(Box)({
+  width: "100%", // Fix IE 11 issue.
+  marginTop: 1,
+});
 
 const Signup = () => {
   const [signupData, setSignupData] = useState({
@@ -55,9 +90,10 @@ const Signup = () => {
   };
 
   return (
-    <Container className="outside-container">
-      <Grid container className="inner-container" spacing={2}>
-        <Grid item xs={6} className="left-side">
+    <Root>
+      <Container component="main">
+        <CssBaseline />
+        <Paper elevation={3}>
           <Typography variant="h5" gutterBottom>
             Sign Up
           </Typography>
@@ -119,7 +155,7 @@ const Signup = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: 20 }}
+              style={{ display: "block", margin: "2rem auto" }}
             >
               Sign Up
             </Button>
@@ -127,12 +163,9 @@ const Signup = () => {
           <Typography variant="body2" style={{ marginTop: 20 }}>
             Already have an account? <Link to="/login">Login</Link>
           </Typography>
-        </Grid>
-        <Grid item xs={12} className="imgbackground">
-          <img src={image} alt="fafd" style={{ width: "100%" }} />
-        </Grid>
-      </Grid>
-    </Container>
+        </Paper>
+      </Container>
+    </Root>
   );
 };
 
