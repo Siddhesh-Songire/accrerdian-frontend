@@ -1,19 +1,8 @@
-// src/Signup.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 
 import image from "../assets/image1.jpg";
-import { styled } from "@mui/system";
-import { Box } from "@mui/material";
 
 const Signup = () => {
   const [signupData, setSignupData] = useState({
@@ -23,132 +12,128 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleSignupChange = (e) => {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
 
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    // Add your signup logic here
-    console.log("Signup Data:", signupData);
+  const validateForm = () => {
+    const newErrors = {};
+    // Add your validation rules here
+    if (!signupData.username.trim()) {
+      newErrors.username = "Username is required";
+    }
+    if (!signupData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(signupData.email)) {
+      newErrors.email = "Email is not valid";
+    }
+    if (!signupData.password.trim()) {
+      newErrors.password = "Password is required";
+    } else if (signupData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    if (!signupData.confirmPassword.trim()) {
+      newErrors.confirmPassword = "Confirm Password is required";
+    } else if (signupData.confirmPassword !== signupData.password) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const CustomFeatures = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100vw",
-    height: "100vh",
-    ".outside-container": {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
 
-    ".inner-container": {
-      // background: "red",
-      height: "80vh",
-      display: "flex",
-      // flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: "10px",
-      boxShadow: "0px 3px 5px 2px rgba(0,0,0,0.75)",
-      border: "1px solid black",
-    },
-
-    ".imgbackground": {
-      objectFit: "cover",
-      width: "50%",
-      height: "100%",
-      background: "blue",
-      ".img": {
-        width: "100%",
-        height: "100%",
-      },
-    },
-
-    ".left-side": {
-      padding: "3rem",
-    },
-  }));
+    if (validateForm()) {
+      // Proceed with signup logic
+      console.log("Signup Data:", signupData);
+    } else {
+      console.log("Form validation failed");
+    }
+  };
 
   return (
-    <CustomFeatures>
-      <Container className="outside-coontainer">
-        <Grid container className="inner-container">
-          <Grid item xs={6} className="left-side">
-            <Typography variant="h5" gutterBottom>
-              Sign Up
-            </Typography>
-            <form onSubmit={handleSignupSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Username"
-                    name="username"
-                    variant="outlined"
-                    required
-                    onChange={handleSignupChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    name="email"
-                    type="email"
-                    variant="outlined"
-                    required
-                    onChange={handleSignupChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    name="password"
-                    type="password"
-                    variant="outlined"
-                    required
-                    onChange={handleSignupChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Confirm Password"
-                    name="confirmPassword"
-                    type="password"
-                    variant="outlined"
-                    required
-                    onChange={handleSignupChange}
-                  />
-                </Grid>
+    <Container className="outside-container">
+      <Grid container className="inner-container" spacing={2}>
+        <Grid item xs={6} className="left-side">
+          <Typography variant="h5" gutterBottom>
+            Sign Up
+          </Typography>
+          <form onSubmit={handleSignupSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Username"
+                  name="username"
+                  variant="outlined"
+                  required
+                  onChange={handleSignupChange}
+                  error={Boolean(errors.username)}
+                  helperText={errors.username}
+                />
               </Grid>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ marginTop: 20 }}
-              >
-                Sign Up
-              </Button>
-            </form>
-            <Typography variant="body2" style={{ marginTop: 20 }}>
-              Already have an account? <Link to="/login">Login</Link>
-            </Typography>
-          </Grid>
-          <Grid item xs={6} className="imgbackground">
-            <img src={image} alt="fafd" className="img" />
-          </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  name="email"
+                  type="email"
+                  variant="outlined"
+                  required
+                  onChange={handleSignupChange}
+                  error={Boolean(errors.email)}
+                  helperText={errors.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Password"
+                  name="password"
+                  type="password"
+                  variant="outlined"
+                  required
+                  onChange={handleSignupChange}
+                  error={Boolean(errors.password)}
+                  helperText={errors.password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  variant="outlined"
+                  required
+                  onChange={handleSignupChange}
+                  error={Boolean(errors.confirmPassword)}
+                  helperText={errors.confirmPassword}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: 20 }}
+            >
+              Sign Up
+            </Button>
+          </form>
+          <Typography variant="body2" style={{ marginTop: 20 }}>
+            Already have an account? <Link to="/login">Login</Link>
+          </Typography>
         </Grid>
-      </Container>
-    </CustomFeatures>
+        <Grid item xs={12} className="imgbackground">
+          <img src={image} alt="fafd" style={{ width: "100%" }} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
 export default Signup;
-
-//
